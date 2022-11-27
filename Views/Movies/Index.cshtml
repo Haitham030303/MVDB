@@ -11,10 +11,12 @@
 <table class="table table-hover">
     <tr>
         <th>Title</th>
+        <th>IMDb Rating</th>
     </tr>
 @foreach (var movie in Model) {
     <tr>
-        <td>@Html.ActionLink(@movie.Title, "Details", "Movies", new { id = movie.Id}, new { @class = "link-dark"})</td>
+        <td>@Html.ActionLink(@movie.Title, "Details", "Movies", new { id = movie.Id}, new { @class = "link-dark"}) (@movie.Year)</td>
+        <td>@movie.GetRating()</td>
     </tr>
 }
 </table>

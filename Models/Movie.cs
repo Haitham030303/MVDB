@@ -18,4 +18,16 @@ public partial class Movie
     public virtual ICollection<Person> Directors { get; } = new List<Person>();
 
     public virtual ICollection<Person> Stars { get; } = new List<Person>();
+
+    public double GetRating()
+    {
+        if (Rating == null) return 0;
+        return Rating.IMDBRating;
+    }
+
+    public long GetVotes()
+    {
+        if (Rating == null) return 0;
+        return Rating.Votes;
+    }
 }

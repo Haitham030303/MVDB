@@ -18,7 +18,7 @@ namespace MVDB.Controllers
         {
             #pragma warning disable CS8602 // Dereference of a possibly null reference.
             
-            var movies = _context.Movies.OrderByDescending(m => m.Rating.Votes).Take(100);
+            var movies = _context.Movies.Include(m => m.Rating).OrderByDescending(m => m.Rating.Votes).Take(100);
             
             #pragma warning restore CS8602 // Dereference of a possibly null reference.
             
