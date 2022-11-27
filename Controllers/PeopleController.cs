@@ -1,33 +1,38 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MVDB.Data;
 using MVDB.Models;
+using System.Linq;
+using System.Security.Cryptography.Xml;
 
 namespace MVDB.Controllers
 {
     public class PeopleController : Controller
     {
-        /*
-        private List<Customer> customers = new List<Customer>
+        private MoviesContext _context;
+
+        public PeopleController()
         {
-            new Customer() { Id = 1, Name = "John Smith" },
-            new Customer() { Id = 2, Name = "Marry Lawrence" }
-        };
-        */
+            _context = new MoviesContext();
+        }
+
         [Route("people")]     
         public IActionResult Index()
         {
 
-            //return View(customers);
-            return View();
+            var people = _context.People.Take(300);
+
+            return View(people);            
         }
 
         [Route("people/details/{id}")]
         public IActionResult Details(int id)
         {
-        //    var customer = customers.Find(x => x.Id == id);
-        //    if (customer == null)
-        //        return NotFound();
-        //    return View(customer);
-        return View();
+            var person = _context.People.SingleOrDefault(x => x.Id == id);
+            if (person == null)
+                return NotFound();
+            return View(person);
         }
     }
 }

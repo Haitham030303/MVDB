@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using MVDB.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Xml;
 
 namespace MVDB.Data;
 
@@ -23,7 +24,7 @@ public partial class MoviesContext : DbContext
     public virtual DbSet<Rating> Ratings { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlite("Name=MoviesDB");
+        => optionsBuilder.UseSqlite("Data source=C:\\Users\\DSU\\Downloads\\OOD\\Database\\movies.db");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -99,6 +100,12 @@ public partial class MoviesContext : DbContext
                 .HasForeignKey<Rating>(d => d.MovieId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
         });
+        modelBuilder.Entity<Person>()
+            .Property(p => p.Birth)
+            .HasConversion<double>();
+        modelBuilder.Entity<Movie>()
+            .Property(m => m.Year)
+            .HasConversion<double>();
 
         OnModelCreatingPartial(modelBuilder);
     }

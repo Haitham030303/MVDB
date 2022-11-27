@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MVDB.Models;
 
@@ -7,6 +8,7 @@ public partial class Movie
 {
     public long Id { get; set; }
 
+    [Required]
     public string Title { get; set; } = null!;
 
     public decimal? Year { get; set; }
