@@ -9,4 +9,36 @@
 
 
 <h3>@Model.Name</h3>
+
 <p>Date of Birth: @Model.Birth</p>
+
+@if (Model.StarredMovies.Count == 1)
+{
+    <h4>Starred Movie:</h4>
+}
+else if (Model.StarredMovies.Count > 1)
+{
+    <h4>Starred Movies</h4>
+}
+
+<p>
+    @foreach (var movie in Model.StarredMovies) {
+    <text>@movie.Title, </text>
+    }
+</p>
+
+@if (Model.DirectedMovies.Count == 1)
+{
+    <h4>Directed Movie:</h4>
+}
+else if (Model.DirectedMovies.Count > 1)
+{
+    <h4>Directed Movies</h4>
+}
+
+<p>
+    @foreach (var movie in Model.DirectedMovies)
+    {
+        <text>@movie.Title, </text>
+    }
+</p>

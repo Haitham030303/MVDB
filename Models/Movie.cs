@@ -15,9 +15,9 @@ public partial class Movie
 
     public virtual Rating? Rating { get; set; }
 
-    public virtual ICollection<Person> Directors { get; } = new List<Person>();
+    public virtual IList<Person> Directors { get; } = new List<Person>();
 
-    public virtual ICollection<Person> Stars { get; } = new List<Person>();
+    public virtual IList<Person> Stars { get; } = new List<Person>();
 
     public double GetRating()
     {
@@ -29,5 +29,25 @@ public partial class Movie
     {
         if (Rating == null) return 0;
         return Rating.Votes;
+    }
+
+    public IEnumerable<string> GetStars()
+    {
+        var stars = new List<string>();
+        foreach (var person in Stars)
+        {
+            stars.Add(person.Name);
+        }
+        return stars;
+    }
+
+    public IEnumerable<string> GetDirectors()
+    {
+        var directors = new List<string>();
+        foreach (var person in Directors)
+        {
+            directors.Add(person.Name);
+        }
+        return directors;
     }
 }

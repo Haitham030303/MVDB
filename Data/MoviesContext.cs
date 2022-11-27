@@ -44,14 +44,14 @@ public partial class MoviesContext : DbContext
                 .UsingEntity<Dictionary<string, object>>(
                     "Director",
                     r => r.HasOne<Person>().WithMany()
-                        .HasForeignKey("PersonId")
+                        .HasForeignKey("person_id")
                         .OnDelete(DeleteBehavior.ClientSetNull),
                     l => l.HasOne<Movie>().WithMany()
-                        .HasForeignKey("MovieId")
+                        .HasForeignKey("movie_id")
                         .OnDelete(DeleteBehavior.ClientSetNull),
                     j =>
                     {
-                        j.HasKey("MovieId", "PersonId");
+                        j.HasKey("movie_id", "person_id");
                         j.ToTable("directors");
                     });
 
@@ -59,14 +59,14 @@ public partial class MoviesContext : DbContext
                 .UsingEntity<Dictionary<string, object>>(
                     "Star",
                     r => r.HasOne<Person>().WithMany()
-                        .HasForeignKey("PersonId")
+                        .HasForeignKey("person_id")
                         .OnDelete(DeleteBehavior.ClientSetNull),
                     l => l.HasOne<Movie>().WithMany()
-                        .HasForeignKey("MovieId")
+                        .HasForeignKey("movie_id")
                         .OnDelete(DeleteBehavior.ClientSetNull),
                     j =>
                     {
-                        j.HasKey("MovieId", "PersonId");
+                        j.HasKey("movie_id", "person_id");
                         j.ToTable("stars");
                     });
         });

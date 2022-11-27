@@ -8,15 +8,23 @@
 
 <h2>Popular Movies</h2>
 
+@{
+    long i = 1;
+}
+
 <table class="table table-hover">
     <tr>
+        <th></th>
         <th>Title</th>
         <th>IMDb Rating</th>
     </tr>
-@foreach (var movie in Model) {
-    <tr>
-        <td>@Html.ActionLink(@movie.Title, "Details", "Movies", new { id = movie.Id}, new { @class = "link-dark"}) (@movie.Year)</td>
-        <td>@movie.GetRating()</td>
-    </tr>
-}
+    @foreach (var movie in Model)
+    {
+        <tr>
+            <td>@i.</td>
+            <td>@Html.ActionLink(@movie.Title, "Details", "Movies", new { id = movie.Id}, new { @class = "link-dark"}) (@movie.Year)</td>
+            <td>@movie.GetRating()</td>
+        </tr>
+        i = i + 1;
+    }
 </table>

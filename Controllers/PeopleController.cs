@@ -21,7 +21,8 @@ namespace MVDB.Controllers
         public IActionResult Index()
         {
 
-            var people = _context.People.Take(300);
+            var people = _context.People
+                .Take(300);
 
             return View(people);            
         }
@@ -29,7 +30,10 @@ namespace MVDB.Controllers
         [Route("people/details/{id}")]
         public IActionResult Details(int id)
         {
-            var person = _context.People.SingleOrDefault(x => x.Id == id);
+            var person = _context.People
+                .Include(m => m.StarredMovies)
+                .Include(m => m.DirectedMovies)
+                .SingleOrDefault(x => x.Id == id);
             if (person == null)
                 return NotFound();
             return View(person);

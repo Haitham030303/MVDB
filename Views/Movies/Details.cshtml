@@ -9,3 +9,20 @@
 
 <h3>@Model.Title</h3>
 <p>Release Year: @Model.Year</p>
+
+<h4>Stars:</h4>
+<p>
+    <text>@string.Join(", ", @Model.GetStars())</text>
+</p>
+
+@if (Model.Directors.Count == 1)
+{
+    <h4>Director:</h4>
+}
+else if (Model.Directors.Count > 1){
+    <h4></h4>
+}
+
+<p>
+    <text>@string.Join(", ", @Model.GetDirectors())</text>
+</p>

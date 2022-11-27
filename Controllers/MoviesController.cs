@@ -18,7 +18,7 @@ namespace MVDB.Controllers
         {
             #pragma warning disable CS8602 // Dereference of a possibly null reference.
             
-            var movies = _context.Movies.Include(m => m.Rating).OrderByDescending(m => m.Rating.Votes).Take(100);
+            var movies = _context.Movies.Include(m => m.Rating).OrderByDescending(m => m.Rating.Votes).Take(99);
             
             #pragma warning restore CS8602 // Dereference of a possibly null reference.
             
@@ -28,7 +28,7 @@ namespace MVDB.Controllers
         [Route("movies/details/{id}")]
         public IActionResult Details(int id)
         {
-            var movie = _context.Movies.SingleOrDefault(m => m.Id == id);
+            var movie = _context.Movies.Include(m => m.Stars).Include(m => m.Directors).SingleOrDefault(m => m.Id == id);
             if (movie == null)
                 return NotFound();
             return View(movie);
