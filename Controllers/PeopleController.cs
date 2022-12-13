@@ -18,13 +18,25 @@ namespace MVDB.Controllers
         }
 
         [Route("people")]     
-        public IActionResult Index()
+        public IActionResult Index(int pageIndex = 1)
         {
+            var people = _context.People;
+            
+            int pageSize = 10;
+            
+            if (pageIndex < 1) pageIndex = 1;
+            
+            int peopleCount = people.Count();
+            
+            var pager = new Pager(peopleCount, pageIndex, pageSize);
+            
+            var skip = (pageIndex - 1) * pageSize;
 
-            var people = _context.People.Take(100);
+            var paginatedPeople = people.Skip(skip).Take(pager.PageSize);
 
-            var orderedPeople = people.OrderByDescending(p => p.StarredMovies.Sum(m => m.Rating.Votes) + p.DirectedMovies.Sum(m => m.Rating.Votes));
-            return View(people);            
+            ViewBag.Pager = pager;
+
+            return View(paginatedPeople);            
         }
 
         [Route("people/details/{id}")]
