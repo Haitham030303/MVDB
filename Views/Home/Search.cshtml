@@ -1,0 +1,81 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model SearchResultViewModel
+@{
+    ViewData["Title"] = "Search Results";
+}
+<div class="text-center">
+    <h2>Search Results</h2>
+</div>
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link link-dark active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Movies</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link link-dark" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">People</button>
+    </li>
+</ul>
+<br />
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+        @{
+            long i = 1;
+        }
+        @if (Model.Movies.Count == 0)
+        {
+            <h3>No Movies Found!</h3>
+        }
+        else {
+
+            <table class="table table-hover">
+                <tr>
+                    <th></th>
+                    <th>Title</th>
+                    <th>IMDb Rating</th>
+                </tr>
+                @foreach (var movie in Model.Movies)
+                {
+                    <tr>
+                        <td>@i.</td>
+                        <td>@Html.ActionLink(@movie.Title, "Details", "Movies", new { id = movie.Id}, new { @class = "link-dark"}) (@movie.Year)</td>
+                        <td>@movie.DisplayRating()</td>
+                    </tr>
+                    i = i + 1;
+                }
+            </table>
+        }
+    </div>
+    <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+        @{
+            long j = 1;
+        }
+        @if (Model.People.Count == 0)
+        {
+            <h3>No People Found!</h3>
+        }
+        else
+        {
+
+            <table class="table table-hover">
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                </tr>
+                @foreach (var person in Model.People)
+                {
+                    <tr>
+                        <td>@j.</td>
+                        <td>@Html.ActionLink(@person.Name, "Details", "People", new { id = person.Id}, new { @class = "link-dark"}) 
+                            @if (person.Birth != null)
+                            {
+                                <text> (b.@person.Birth) </text>
+                            }</td>
+                    </tr>
+                    j = j + 1;
+                }
+            </table>
+        }
+    </div>
+</div>

@@ -16,3 +16,7 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.searchbar {
+    width: 35vw;
+}

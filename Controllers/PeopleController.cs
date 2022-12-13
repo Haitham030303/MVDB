@@ -21,19 +21,20 @@ namespace MVDB.Controllers
         public IActionResult Index()
         {
 
-            var people = _context.People
+            var people = _context.People                
                 .Take(300);
-
             return View(people);            
         }
 
         [Route("people/details/{id}")]
         public IActionResult Details(int id)
-        {
+        { 
             var person = _context.People
-                .Include(m => m.StarredMovies)
-                .Include(m => m.DirectedMovies)
-                .SingleOrDefault(x => x.Id == id);
+                .Where(x => x.Id == id)
+                .Include(p => p.StarredMovies)
+                .Include(p => p.DirectedMovies)
+                .SingleOrDefault();
+            
             if (person == null)
                 return NotFound();
             return View(person);

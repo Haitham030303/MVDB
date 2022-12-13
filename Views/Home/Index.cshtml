@@ -1,4 +1,5 @@
-﻿@{
+﻿@model SearchViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -6,10 +7,9 @@
     <h1 class="display-4">Welcome to MVDB!</h1>
     <h3>Looking for a movie to watch? We'll help you out!<br/>
         Find the best movies by your favorite actors.</h3>
-    <form>
-        <input type="text" name="query" placeholder="Search for a movie.">
-        <input type="submit" value="Search">
+    <form method="post" asp-controller="Home" asp-action="Index">
+        <input autofocus type="text" name="searchText" class="form-control" style="display: inline-block; margin-top: 10px; width: 48%" placeholder="Search for a movie, an actor, or a director...">
+        <input type="submit" value="Search" style="display: inline-block" class="btn btn-primary">
     </form>
-    
     <!--<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>-->
 </div>

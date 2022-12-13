@@ -23,7 +23,7 @@
         <tr>
             <td>@i.</td>
             <td>@Html.ActionLink(@movie.Title, "Details", "Movies", new { id = movie.Id}, new { @class = "link-dark"}) (@movie.Year)</td>
-            <td>@movie.GetRating()</td>
+            <td>@movie.DisplayRating()</td>
         </tr>
         i = i + 1;
     }

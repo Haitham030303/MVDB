@@ -30,6 +30,11 @@ public partial class Movie
         if (Rating == null) return 0;
         return Rating.Votes;
     }
+    public string DisplayRating()
+    {
+        if (Rating == null) return "N/A";
+        return Rating.IMDBRating.ToString();
+    }
 
     public IEnumerable<string> GetStars()
     {

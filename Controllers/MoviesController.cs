@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using MVDB.Data;
 
 namespace MVDB.Controllers
@@ -28,7 +29,12 @@ namespace MVDB.Controllers
         [Route("movies/details/{id}")]
         public IActionResult Details(int id)
         {
-            var movie = _context.Movies.Include(m => m.Stars).Include(m => m.Directors).SingleOrDefault(m => m.Id == id);
+            var movie = _context.Movies
+                                    .Where(m => m.Id == id)
+                                    .Include(m => m.Stars)
+                                    .Include(m => m.Directors)
+                                    .SingleOrDefault();
+
             if (movie == null)
                 return NotFound();
             return View(movie);
