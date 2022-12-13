@@ -45,7 +45,9 @@ namespace MVDB.Controllers
             var person = _context.People
                 .Where(x => x.Id == id)
                 .Include(p => p.StarredMovies)
+                .ThenInclude(m => m.Rating)
                 .Include(p => p.DirectedMovies)
+                .ThenInclude(m => m.Rating)
                 .SingleOrDefault();
             
             if (person == null)

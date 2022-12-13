@@ -43,6 +43,7 @@ namespace MVDB.Controllers
         {
             var movie = _context.Movies
                                     .Where(m => m.Id == id)
+                                    .Include(m => m.Rating)
                                     .Include(m => m.Stars)
                                     .Include(m => m.Directors)
                                     .SingleOrDefault();

@@ -7,6 +7,30 @@
     ViewData["Title"] = @Model.Name;
 }
 
+<style>
+    h4 {
+        margin: auto;
+    }
+    table { 
+        border-collapse: collapse; 
+        width: 70%;
+        margin: auto;   
+    }
+tr { border: none; }
+th {
+    padding-left: 86px;
+    padding-bottom: 20px;
+}
+td {
+    padding-left: 50px;
+}
+td.left {
+  border-right: solid 1px #000; 
+}
+td.right {
+  border-left: solid 1px #000;
+}
+</style>
 
 <h3>@Model.Name</h3>
 @{
@@ -30,7 +54,7 @@ else if (Model.StarredMovies.Count > 1)
 }
 
 <p>
-    @foreach (var movie in Model.StarredMovies) {
+    @foreach (var movie in Model.StarredMovies.OrderByDescending(m => m.GetVotes())) {
         <text>@Html.ActionLink(@movie.Title, "Details", "Movies", new { id = movie.Id}, new { @class = "link-dark"}), &nbsp;</text>
     }
 </p>
@@ -45,8 +69,60 @@ else if (Model.DirectedMovies.Count > 1)
 }
 
 <p>
-    @foreach (var movie in Model.DirectedMovies)
+    @foreach (var movie in Model.DirectedMovies.OrderByDescending(m => m.GetVotes()))
     {
         <text>@Html.ActionLink(@movie.Title, "Details", "Movies", new { id = movie.Id}, new { @class = "link-dark"}), &nbsp;</text>
     }
 </p>
+<pre>
+
+
+
+</pre>
+@if (Model.StarredMovies.Count >= 1) {
+
+<div class="text-center">
+</div>
+
+<table>
+    <tr>
+        <th colspan="2"><h4>Acting History</h4></th>
+    </tr>
+
+    @foreach (var movie in Model.StarredMovies.OrderByDescending(m => m.Year))
+    {
+    <tr>
+        <td class="left">@movie.Year</td>
+        <td class="right">@Html.ActionLink(@movie.Title, "Details", "Movies", new { id = movie.Id}, new { @class = "link-dark"})</td>
+    </tr>
+    }
+</table>
+
+}
+
+<pre>
+
+
+
+</pre>
+@if (Model.DirectedMovies.Count >= 1)
+{
+
+    <div class="text-center">
+    </div>
+
+    <table>
+        <tr>
+            <th colspan="2"><h4>Directing History</h4></th>
+        </tr>
+
+        @foreach (var movie in Model.DirectedMovies.OrderByDescending(m => m.Year))
+        {
+            <tr>
+                <td class="left">@movie.Year</td>
+                <td class="right">@Html.ActionLink(@movie.Title, "Details", "Movies", new { id = movie.Id}, new { @class = "link-dark"})</td>
+            </tr>
+        }
+    </table>
+
+}
