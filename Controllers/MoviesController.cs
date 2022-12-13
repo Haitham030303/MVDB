@@ -21,7 +21,7 @@ namespace MVDB.Controllers
             var movies = _context.Movies.Include(m => m.Rating).OrderByDescending(m => m.Rating.Votes);
 
 
-            int pageSize = 100;
+            int pageSize = 10;
 
             if (pageIndex < 1) pageIndex = 1;
 
