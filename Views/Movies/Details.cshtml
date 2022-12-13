@@ -11,10 +11,12 @@
 <p>Release Year: @Model.Year</p>
 
 <h4>Stars:</h4>
-<p>
-    <text>@string.Join(", ", @Model.GetStars())</text>
-</p>
-
+@foreach (var star in Model.Stars)
+{
+    <text>@Html.ActionLink(star.Name, "Details", "People", new { id = star.Id }, new { @class = "link-dark"}),  &nbsp; </text>
+}
+<br />
+<br />
 @if (Model.Directors.Count == 1)
 {
     <h4>Director:</h4>
@@ -23,6 +25,7 @@ else if (Model.Directors.Count > 1){
     <h4>Directors:</h4>
 }
 
-<p>
-    <text>@string.Join(", ", @Model.GetDirectors())</text>
-</p>
+@foreach (var director in Model.Directors)
+{
+    <text>@Html.ActionLink(director.Name, "Details", "People", new { id = director.Id }, new { @class = "link-dark"}),  &nbsp;</text>
+}

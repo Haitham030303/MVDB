@@ -31,7 +31,7 @@ else if (Model.StarredMovies.Count > 1)
 
 <p>
     @foreach (var movie in Model.StarredMovies) {
-    <text>@movie.Title, </text>
+        <text>@Html.ActionLink(@movie.Title, "Details", "Movies", new { id = movie.Id}, new { @class = "link-dark"}), &nbsp;</text>
     }
 </p>
 
@@ -47,6 +47,6 @@ else if (Model.DirectedMovies.Count > 1)
 <p>
     @foreach (var movie in Model.DirectedMovies)
     {
-        <text>@movie.Title, </text>
+        <text>@Html.ActionLink(@movie.Title, "Details", "Movies", new { id = movie.Id}, new { @class = "link-dark"}), &nbsp;</text>
     }
 </p>
