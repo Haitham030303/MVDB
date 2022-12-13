@@ -16,20 +16,27 @@
         width: 70%;
         margin: auto;   
     }
-tr { border: none; }
-th {
-    padding-left: 86px;
-    padding-bottom: 20px;
-}
-td {
-    padding-left: 50px;
-}
-td.left {
-  border-right: solid 1px #000; 
-}
-td.right {
-  border-left: solid 1px #000;
-}
+    
+    tr {
+        border: none; 
+    }
+    
+    th {
+        padding-left: 86px;
+        padding-bottom: 20px;
+    }
+    
+    td {
+        padding-left: 50px;
+    }
+    
+    td.left {
+      border-right: solid 1px #000; 
+    }
+    
+    td.right {
+      border-left: solid 1px #000;
+    }
 </style>
 
 <h3>@Model.Name</h3>
@@ -46,10 +53,20 @@ else {
 
 @if (Model.StarredMovies.Count == 1)
 {
+    <p>
+        <i>Mostly Known For:</i> @Model.StarredMovies.First().Title<br />
+        <i>Highest Rated Movie:</i> @Model.StarredMovies.First().Title</p>
     <h4>Starred Movie:</h4>
 }
 else if (Model.StarredMovies.Count > 1)
 {
+    @if (@Model.StarredMovies.Any(m => m.Rating != null))
+    {
+        <p>
+            <i>Mostly Known For:</i> @Model.StarredMovies.Where(m => m.Rating != null).OrderByDescending(m => m.Rating.Votes).First().Title<br>
+            <i>Highest Rated Movie:</i> @Model.StarredMovies.Where(m => m.Rating != null).OrderByDescending(m => m.Rating.IMDBRating).First().Title
+        </p>
+    }
     <h4>Starred Movies:</h4>
 }
 

@@ -21,7 +21,7 @@ namespace MVDB.Controllers
             var movies = _context.Movies.Include(m => m.Rating).OrderByDescending(m => m.Rating.Votes);
 
 
-            int pageSize = 10;
+            int pageSize = 100;
 
             if (pageIndex < 1) pageIndex = 1;
 
@@ -41,12 +41,20 @@ namespace MVDB.Controllers
         [Route("movies/details/{id}")]
         public IActionResult Details(int id)
         {
-            var movie = _context.Movies
-                                    .Where(m => m.Id == id)
-                                    .Include(m => m.Rating)
-                                    .Include(m => m.Stars)
-                                    .Include(m => m.Directors)
-                                    .SingleOrDefault();
+            /* var movie = _context.Movies
+                                     .Where(m => m.Id == id)
+                                     .Include(m => m.Rating)
+                                     .Include(m => m.Stars)
+                                     .Include(m => m.Directors)
+                                     .SingleOrDefault();
+             */
+            var validId = _context.Movies.Any(m => m.Id == id);
+            if (!validId)
+                return NotFound();
+
+            var movie = _context.Movies.Single(m => m.Id == id);
+            _context.Entry(movie).Collection(m => m.Stars).Load();
+            _context.Entry(movie).Collection(m => m.Directors).Load();
 
             if (movie == null)
                 return NotFound();

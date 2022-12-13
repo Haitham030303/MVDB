@@ -41,15 +41,18 @@ namespace MVDB.Controllers
 
         [Route("people/details/{id}")]
         public IActionResult Details(int id)
-        { 
-            var person = _context.People
+        {
+            /*var person = _context.People
                 .Where(x => x.Id == id)
                 .Include(p => p.StarredMovies)
                 .ThenInclude(m => m.Rating)
                 .Include(p => p.DirectedMovies)
                 .ThenInclude(m => m.Rating)
-                .SingleOrDefault();
-            
+                .SingleOrDefault();*/
+            var person = _context.People.Single(p => p.Id == id);
+            _context.Entry(person).Collection(p => p.StarredMovies).Query().Include(m => m.Rating).Load();
+            _context.Entry(person).Collection(p => p.DirectedMovies).Query().Include(m => m.Rating).Load();
+
             if (person == null)
                 return NotFound();
             return View(person);
