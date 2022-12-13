@@ -21,8 +21,13 @@ namespace MVDB.Controllers
         public IActionResult Index()
         {
 
-            var people = _context.People                
-                .Take(300);
+            // First, retrieve the first 300 people
+            var people = _context.People.Take(100);
+
+            var orderedPeople = people.OrderByDescending(p => p.StarredMovies.Sum(m => m.Rating.Votes) + p.DirectedMovies.Sum(m => m.Rating.Votes));
+
+            // Finally, return the ordered people
+
             return View(people);            
         }
 

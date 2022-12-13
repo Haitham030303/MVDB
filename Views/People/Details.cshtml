@@ -9,8 +9,16 @@
 
 
 <h3>@Model.Name</h3>
-
-<p>Date of Birth: @Model.Birth</p>
+@{
+    var age = 2022 - Model.Birth;
+}
+@if (Model.Birth != null)
+{
+    <p>@Model.Name was born in @Model.Birth. (Age: @age)</p>
+}
+else {
+    <br />
+}
 
 @if (Model.StarredMovies.Count == 1)
 {

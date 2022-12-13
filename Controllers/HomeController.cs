@@ -38,9 +38,10 @@ namespace MVDB.Controllers
         {
             SearchResultViewModel vm = new()
             {
-                Movies = _context.Movies.Include(m => m.Rating).Where(m => m.Title.ToLower().Contains(searchTerm.ToLower())).OrderByDescending(m => m.Rating.Votes).ToList(),
+                Movies = _context.Movies.Include(m => m.Rating)
+                            .Where(m => m.Title.ToLower().Contains(searchTerm.ToLower()))
+                            .OrderByDescending(m => m.Rating.Votes).ToList(),
                 People = _context.People.Where(p => p.Name.ToLower().Contains(searchTerm.ToLower())).ToList(),
-                ResultType = ResultType.DisplayMovies
             };
 
             return View(vm);
