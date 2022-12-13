@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using MVDB.Data;
+using MVDB.Models;
 
 namespace MVDB.Controllers
 {
@@ -15,15 +16,26 @@ namespace MVDB.Controllers
         }
 
         [Route("movies")]
-        public IActionResult Index()
+        public IActionResult Index(int pageIndex = 1)
         {
-            #pragma warning disable CS8602 // Dereference of a possibly null reference.
-            
-            var movies = _context.Movies.Include(m => m.Rating).OrderByDescending(m => m.Rating.Votes).Take(99);
-            
-            #pragma warning restore CS8602 // Dereference of a possibly null reference.
-            
-            return View(movies);
+            var movies = _context.Movies.Include(m => m.Rating).OrderByDescending(m => m.Rating.Votes);
+
+
+            int pageSize = 10;
+
+            if (pageIndex < 1) pageIndex = 1;
+
+            int moviesCount = movies.Count();
+
+            var pager = new Pager(moviesCount, pageIndex, pageSize);
+
+            var skip = (pageIndex - 1) * pageSize;
+
+            var paginatedMovies = movies.Skip(skip).Take(pager.PageSize);
+
+            ViewBag.Pager = pager;
+
+            return View(paginatedMovies);
         }
 
         [Route("movies/details/{id}")]

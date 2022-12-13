@@ -4,12 +4,21 @@
 @model IEnumerable<Movie>
 @{
     ViewData["Title"] = "Browse Movies";
+    Pager pager = new Pager();
+
+    int pageNo = 1;
+
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.CurrentPage;
+    }
 }
 
 <h2>Popular Movies</h2>
 
 @{
-    long i = 1;
+    long i = (pager.CurrentPage - 1) * pager.PageSize + 1;
 }
 
 <table class="table table-hover">
@@ -28,3 +37,35 @@
         i = i + 1;
     }
 </table>
+
+<div class="container">
+    @if (pager.TotalPages > 0)
+    {
+        <ul class="pagination justify-content-end">
+            @if (pager.CurrentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Movies" asp-action="Index" asp-route-pageIndex="1">First</a>
+                </li>
+                <li>
+                    <a class="page-link" asp-controller="Movies" asp-action="Index" asp-route-pageIndex="@(pager.CurrentPage - 1)">Previous</a>
+                </li>
+            }
+            @for (var pg = pager.StartPage; pg <= pager.EndPage; pg++)
+            {
+                <li class="page-item @(pg == pager.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-route-pageIndex="@pg" asp-controller="Movies" asp-action="Index">@pg</a>
+                </li>
+            }
+            @if (pager.CurrentPage < pager.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Movies" asp-action="Index" asp-route-pageIndex="@(pager.CurrentPage + 1)">Next</a>
+                </li>
+                <li>
+                    <a class="page-link" asp-controller="Movies" asp-action="Index" asp-route-pageIndex="@(pager.TotalPages)">Last</a>
+                </li>
+            }
+        </ul>
+    }
+</div>
