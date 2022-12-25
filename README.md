@@ -21,5 +21,5 @@ Features:
 
 Credits/Resources
 
-- Utilized the open-source API of https://www.IMDb.com
+- Utilized the open-source API of IMDb.com
 
